@@ -30,6 +30,7 @@ public class ParkingLot {
         if (ticket != null && ticket.getExitTime() == null) {
             // Set exit time
             ticket.setExitTime(LocalDateTime.now());
+            System.out.println("Vehicle exited at " + ticket.getExitTime());
 
             // Delegate unparking logic to ParkingManager
             parkingManager.unparkVehicle(ticket.getVehicle());

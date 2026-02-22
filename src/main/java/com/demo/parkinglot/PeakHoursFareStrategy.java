@@ -15,6 +15,7 @@ public class PeakHoursFareStrategy implements FareStrategy {
         if (isPeakHours(ticket.getEntryTime())) {
             fare = fare.multiply(PEAK_HOURS_MULTIPLIER);
         }
+        System.out.println("Fare after peak strategy is " + fare);
         return fare;
     }
 

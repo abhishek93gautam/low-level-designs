@@ -29,7 +29,7 @@ public class Ticket {
                 Duration.between(
                                 entryTime,
                                 Objects.requireNonNullElseGet(exitTime, LocalDateTime::now))
-                        .toMinutes());
+                        .toSeconds());
     } // getter and setter methods are omitted for brevity
 
     public Vehicle getVehicle() {
@@ -46,5 +46,9 @@ public class Ticket {
 
     public void setExitTime(LocalDateTime time) {
         this.exitTime = time;
+    }
+
+    public ParkingSpot getParkingSpot() {
+        return this.parkingSpot;
     }
 }

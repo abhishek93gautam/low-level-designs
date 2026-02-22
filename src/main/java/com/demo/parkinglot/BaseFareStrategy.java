@@ -23,6 +23,7 @@ public class BaseFareStrategy implements FareStrategy {
                 rate = SMALL_VEHICLE_RATE;
         }
         fare = fare.add(rate.multiply(ticket.calculateParkingDuration()));
+        System.out.println("Fare after Base price strategy is " + fare);
         return fare;
     }
 }
