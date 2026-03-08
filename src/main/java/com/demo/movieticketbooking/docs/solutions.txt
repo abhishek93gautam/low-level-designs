@@ -1,0 +1,39 @@
+Functional Requirements
+
+1) Movie and screening management
+ - Each cinema is located at a specific location and contains multiple rooms.
+ - Movies can have multiple screenings scheduled across different rooms, cinemas, and time slots
+
+2) Seat management and pricing
+ - Each room has a grid of seats available for booking.
+ - Seats within a room can have varying pricing strategies (e.g., normal, premium, VIP) that affect ticket prices.
+
+3) User search and book flow
+ - Users can find and book available tickets.
+ - A ticket represents a specific seat to watch a movie in a room at a particular time.
+ - A user can book multiple tickets within the same order.
+ - The total cost for an order is computed by summing the prices of all selected seats, based on their pricing tiers.
+
+Non-Functional Requirements
+
+1) Fast searches for screenings for a smooth user experience.
+2) Basic error handling should prevent booking conflicts, such as double-booking the same seat.
+
+==============================================================================================================
+
+Core Objects
+
+- Movie
+- Cinema
+- Room
+- Layout (Organizes seating arrangement in a Room as a grid)
+- Seat
+- Screening (Combines a movie, a room, a time slot)
+- Ticket
+- Order
+
+==================================================================================================
+
+Layout
+ - It organizes seats into a grid structure defined by rows and columns. It uses a nested map (Map<Integer, Map<Integer, Seat>>) for efficient seat lookup, where the outer map’s key is the row number, the inner map’s key is the column number within that row, and the value is the Seat object at that position (row → column → seat)
+ - It also maintains an index (Map<String, Seat>) to locate seats by their seat numbers quickly. This design simplifies managing seats across multiple theater rooms, ensuring easy access to seat data for booking purposes.
