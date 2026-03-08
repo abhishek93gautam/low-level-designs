@@ -32,6 +32,7 @@ public class MovieBookingSystem {
     public void bookTicket(Screening screening, Seat seat) {
         BigDecimal price = seat.getPricingStrategy().getPrice();
         Ticket ticket = new Ticket(screening, seat, price);
+        System.out.println("Ticket booked for seat " + seat.getSeatNumber() + " for the price " + price);
         screeningManager.addTicket(screening, ticket);
     }
 

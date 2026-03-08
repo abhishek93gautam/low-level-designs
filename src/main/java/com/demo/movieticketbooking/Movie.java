@@ -16,4 +16,8 @@ public class Movie {
     public Duration getDuration() {
         return Duration.ofMinutes(durationInMinutes);
     }
+
+    public String getTitle() {
+        return this.title;
+    }
 }

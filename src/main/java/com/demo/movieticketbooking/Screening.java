@@ -30,4 +30,8 @@ public class Screening {
     public UUID getId() {
         return this.id;
     }
+
+    public Movie getMovie() {
+        return this.movie;
+    }
 }

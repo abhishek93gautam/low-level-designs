@@ -1,6 +1,8 @@
 package com.demo.movieticketbooking;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +19,7 @@ public class Layout {
     public Layout(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
-        this.seatsByNumber = new HashMap<>();
+        this.seatsByNumber = new LinkedHashMap<>();
         this.seatsByPosition = new HashMap<>();
         initializeLayout();
     }
@@ -27,7 +29,11 @@ public class Layout {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 String seatNumber = i + "-" + j;
-                addSeat(seatNumber, i, j, new Seat(seatNumber, null));
+                if (i >= j) {
+                    addSeat(seatNumber, i, j, new Seat(seatNumber, new PremiumRate(BigDecimal.valueOf(20))));
+                } else {
+                    addSeat(seatNumber, i, j, new Seat(seatNumber, new NormalRate(BigDecimal.valueOf(10))));
+                }
             }
         }
     }
