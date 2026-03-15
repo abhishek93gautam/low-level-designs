@@ -3,6 +3,7 @@ package com.demo.unixfilesystem;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class FileSearch {
     // Performs a recursive search through the file system starting from root
@@ -28,5 +29,46 @@ public class FileSearch {
             }
         }
         return result;
+    }
+
+    public void printFile(File root) {
+
+        class Node {
+            File file;
+            String prefix;
+            boolean isLast;
+
+            Node(File file, String prefix, boolean isLast) {
+                this.file = file;
+                this.prefix = prefix;
+                this.isLast = isLast;
+            }
+        }
+
+        ArrayDeque<Node> stack = new ArrayDeque<>();
+        stack.push(new Node(root, "", true));
+
+        while (!stack.isEmpty()) {
+            Node node = stack.pop();
+
+            System.out.println(
+                    node.prefix +
+                            (node.isLast ? "└── " : "├── ") +
+                            node.file.getFilename()
+            );
+
+            Set<File> entries = node.file.getEntries();
+            List<File> children = new ArrayList<>(entries); // convert Set → List
+
+            for (int i = children.size() - 1; i >= 0; i--) {
+                File child = children.get(i);
+                boolean isLastChild = (i == children.size() - 1);
+
+                String newPrefix = node.prefix +
+                        (node.isLast ? "    " : "│   ");
+
+                stack.push(new Node(child, newPrefix, isLastChild));
+            }
+        }
     }
 }

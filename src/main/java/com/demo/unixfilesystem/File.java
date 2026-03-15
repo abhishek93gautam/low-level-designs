@@ -50,5 +50,9 @@ public class File {
     public Set<File> getEntries() {
         return this.entries;
     }
+
+    public String getFilename() {
+        return this.filename;
+    }
 }
 
