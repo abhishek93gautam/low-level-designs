@@ -1,0 +1,31 @@
+Functional Requirements
+
+- The search system can search for files based on attributes such as size, type, filename, and owner.
+- The search system supports comparison types depending on the attribute: ‘equals’ and ‘regex match’ for strings, and ‘greater than’, ‘equals’, and ‘less than’ for numbers.
+- The system can combine multiple search criteria using logical operators (and, or, not).
+- The file search system can perform recursive searches within directories.
+- The search system can apply search criteria to directories as well as files.
+
+Non Functional Requirements
+
+- Scalability: Efficiently handle large directory trees with thousands or millions of files using resource-efficient traversal strategies.
+- Extensibility: Support adding new attributes (e.g., modification time) and comparison operators without altering core traversal or filtering logic.
+- Separation of concerns: Keep traversal logic separate from filtering logic for a modular and maintainable design.
+
+================================================================================================================
+
+Core Objects
+
+- FileSearch
+- File
+- FileSearchCriteria
+- Predicate
+- SimplePredicate - equals, greater than
+- CompositePredicate - AND, OR, NOT
+- ComparisonOperator
+
+========================================================================================================
+
+Implementation choice: We opted for a stack over recursive calls to prevent stack overflow in deep filesystems, balancing efficiency with robustness. Alternatively, a recursive method could work for smaller structures, but it risks failure on large or deeply nested directories.
+
+Composite Design Pattern
