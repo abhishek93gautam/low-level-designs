@@ -1,0 +1,55 @@
+Functional Requirements
+
+- Product selection: Users should be able to select from a set of products. Each product has a unique product code, description, and price tag.
+  While description is not talked about, it is a common-sense attribute to make the product model more realistic.
+
+- Inventory management: Products are stored in specific racks within the vending machine. The system keeps track of the inventory level for each product in its respective rack.
+- Payment processing: The system only accepts cash payments and can calculate change when needed.
+
+Non-Functional Requirements
+- The user interface must be intuitive, allowing users to complete a purchase (insert money, select product, receive product, and change) with minimal instructions, and error messages should be clear and concise to guide users effectively.
+- The system must protect against unauthorized access to the vending machine, ensuring only admins can add, remove, or update products, and securely handle cash transactions to prevent tampering or fraud.
+
+====================================================================================================================================
+
+The use cases for the User actor are as follows:
+
+1) Insert Money: The user inserts cash to initiate a purchase.
+2) Select Product: The user chooses a product by entering its unique product code.
+3) Receive Product: The user collects the dispensed product from the vending machine.
+4) Receive Change: The user receives any change if the inserted amount exceeds the product’s price.
+
+The use cases for the Admin actor are as follows:
+
+1) Add Product: The admin adds new products to the vending machine’s inventory.
+2) Remove Product: The admin removes products from the vending machine’s inventory.
+3) Update Inventory: The admin updates the stock levels of existing products in the racks.
+
+The use cases for the System actor are as follows.
+
+1) Process Payment: The system validates the inserted cash and calculates change if necessary.
+2) Dispense Product: The system releases the selected product from the appropriate rack.
+3) Check Inventory: The system verifies the availability of a product before dispensing.
+4) Display Message: The system shows messages or errors to guide the user (e.g., “Insert money to proceed,” “Product out of stock,” or “Insufficient funds”).
+
+==========================================================================================================================================
+
+Core Objects:
+
+1) VendingMachine - This is the central entity that coordinates the vending machine’s operations and serves as the main entry point for user interactions.
+   We will ensure this entity does not become a god object (antipattern) by appropriately delegating responsibilities to other components.
+   The Facade design pattern is very helpful in this case, as it allows a single class to orchestrate end-to-end functionality.
+2) Product: Represents the items stored in the vending machine. Each product has attributes like an identifier, a price, and a description.
+   Products are also linked to the racks where they are stored.
+3) Rack: Represents a designated slot in the vending machine that holds a single product type and stores multiple units of that product.
+   It also includes the dispenser hardware to release one unit of a product at a time upon selection.
+4) InventoryManager: Keeps track of the inventory level within the vending machine.
+5) PaymentProcessor: Interacts with coin dispensers to process payment. It also keeps track of the vending machine balance and calculates change when needed.
+
+=================================================================================================================================================
+
+Some Points:
+- The Transaction class improves coordination between different components. While PaymentProcessor is responsible for deducting the required amount, and InventoryManager ensures the selected product is available and dispenses it, the Transaction object ensures that the vending machine keeps all necessary purchase details in one place so that the system can reference them throughout the transaction process.
+- To prevent the VendingMachine class from becoming a “god object” (a class with too many responsibilities), facades should remain lightweight and delegate tasks to other classes that adhere to the single responsibility principle. For example, the vending machine delegates product management to the InventoryManager and payment handling to the PaymentProcessor.
+- For monetary values like the unitPrice attribute, it is recommended to use BigDecimal for its precision and rounding control.
+  For identifiers like productCode, it is recommended to use a string rather than a numeric type in your code, even if the values are digits, you will most likely not be performing calculations, but string operations.
